@@ -27,15 +27,19 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 	
 	@Override
 	public boolean getProjectAvailabilityDaoList(ProjectAvailability projectAvailability) {
-		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(ProjectAvailability.class);
-		List<ProjectAvailability> projectAvailabilityDaoList = criteria.list();
-		if (!projectAvailabilityDaoList.isEmpty()) {
-			projectAvailability.setProjectAvailabilityList(projectAvailabilityDaoList);
+		try {
+			Session session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(ProjectAvailability.class);
+			List<ProjectAvailability> projectAvailabilityDaoList = criteria.list();
+			if (!projectAvailabilityDaoList.isEmpty()) {
+				projectAvailability.setProjectAvailabilityList(projectAvailabilityDaoList);
+				return true;
+			}
 			return true;
+		} catch (Exception e) {
+			return false;
 		}
-
-		return false;
+		
 	}
 
 	@Override

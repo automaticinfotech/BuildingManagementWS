@@ -25,7 +25,7 @@ public class ProjectAvailabilityController {
 	@RequestMapping(value="/getProjectAvailabilityList",method=RequestMethod.GET)
 	public ResponseEntity<?> getProjectAvailabilityList() {
 		ProjectAvailabilityDto projectAvailabilityDto = new ProjectAvailabilityDto();
-
+        System.out.println("Inside ProjectAvailability List");
 		boolean status=projectAvailabilityService.getProjectAvailabilityListService(projectAvailabilityDto);
         if(status){
         	return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.OK);

@@ -26,15 +26,19 @@ public class ProjectMasterDaoImplementation implements ProjectMasterDao {
 
 	@Override
 	public boolean getProjectMasterDaoList(ProjectMaster projectMaster) {
-		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(ProjectMaster.class);
-		List<ProjectMaster> projectMasterDaoList = criteria.list();
-		if (!projectMasterDaoList.isEmpty()) {
-			projectMaster.setProjectMasterList(projectMasterDaoList);
+		try {
+			Session session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(ProjectMaster.class);
+			List<ProjectMaster> projectMasterDaoList = criteria.list();
+			if (!projectMasterDaoList.isEmpty()) {
+				projectMaster.setProjectMasterList(projectMasterDaoList);
+				return true;
+			}
 			return true;
+			
+		} catch (Exception e) {
+			return false;
 		}
-
-		return false;
 	}
 
 	@Override
