@@ -5,15 +5,19 @@ import java.util.List;
 import com.aits.model.ProjectAvailability;
 import com.aits.model.ProjectMaster;
 
-public class ProjectMasterDto implements Cloneable {
+public class ProjectMasterDto {
 
 	private int projectId;
 
 	private String projectName;
 
 	private String projectIsActive;
+	
+	private int numberOfAvailabilityRecords;
 
 	private List<ProjectMaster> projectMasterList;
+	
+	private List<ProjectAvailability> projectAvailabilityList;
 
 	public int getProjectId() {
 		return projectId;
@@ -47,6 +51,23 @@ public class ProjectMasterDto implements Cloneable {
 		this.projectMasterList = projectMasterList;
 	}
 
+	public List<ProjectAvailability> getProjectAvailabilityList() {
+		return projectAvailabilityList;
+	}
+
+	public void setProjectAvailabilityList(List<ProjectAvailability> projectAvailabilityList) {
+		this.projectAvailabilityList = projectAvailabilityList;
+	}
+
+	public int getNumberOfAvailabilityRecords() {
+		return numberOfAvailabilityRecords;
+	}
+
+	public void setNumberOfAvailabilityRecords(int numberOfAvailabilityRecords) {
+		this.numberOfAvailabilityRecords = numberOfAvailabilityRecords;
+	}
+
+	
 	
 	
 	

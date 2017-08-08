@@ -19,4 +19,8 @@ public interface ProjectAvailabilityDao {
 	boolean isProjectAvailabilityExist(ProjectAvailability projectAvailability, ProjectAvailabilityDto projectAvailabilityDto);
 
 	boolean getProjectAvailabilityByAvailabilityId(ProjectAvailabilityDto projectAvailabilityDto);
+
+	boolean deleteProjectAvailabilityDetailsByParentId(ProjectAvailability projectAvailability);
+
+	boolean getProjectAvailabilityListByprojectIdService(ProjectAvailability projectAvailability);
 }

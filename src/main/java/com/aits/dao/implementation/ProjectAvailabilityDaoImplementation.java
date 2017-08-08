@@ -16,7 +16,7 @@ import com.aits.dto.ProjectAvailabilityDto;
 import com.aits.model.ProjectAvailability;
 
 @Repository("ProjectAvailabilityDao")
-public class ProjectAvailabilityDaoImplementation implements ProjectAvailabilityDao{
+public class ProjectAvailabilityDaoImplementation implements ProjectAvailabilityDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
@@ -24,7 +24,7 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	@Override
 	public boolean getProjectAvailabilityDaoList(ProjectAvailability projectAvailability) {
 		try {
@@ -39,7 +39,7 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 		} catch (Exception e) {
 			return false;
 		}
-		
+
 	}
 
 	@Override
@@ -99,27 +99,32 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 	@Override
 	public boolean getProjectAvailabilityByIdDaoList(ProjectAvailability projectAvailability) {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(ProjectAvailability.class).add(Restrictions.eq("projectMaster",projectAvailability.getProjectMaster()));
+		Criteria criteria = session.createCriteria(ProjectAvailability.class)
+				.add(Restrictions.eq("projectMaster", projectAvailability.getProjectMaster()));
 		List<ProjectAvailability> projectAvailabilityDaoList = criteria.list();
 		if (!projectAvailabilityDaoList.isEmpty()) {
 			projectAvailability.setProjectAvailabilityList(projectAvailabilityDaoList);
 			return true;
 		}
 		return false;
-		
+
 	}
 
 	@Override
-	public boolean isProjectAvailabilityExist(ProjectAvailability projectAvailability,ProjectAvailabilityDto projectAvailabilityDto) {
+	public boolean isProjectAvailabilityExist(ProjectAvailability projectAvailability,
+			ProjectAvailabilityDto projectAvailabilityDto) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(ProjectAvailability.class);
 		Criterion criterion = Restrictions.eq("wingName", projectAvailability.getWingName());
-		criteria.add(criterion).add(Restrictions.eq("floorNumber", projectAvailability.getFloorNumber())).add(Restrictions.eq("OfficeNumber", projectAvailability.getOfficeNumber())).add(Restrictions.eq("areaSquareFoot", projectAvailability.getAreaSquareFoot())).add(Restrictions.eq("projectMaster", projectAvailability.getProjectMaster()));
+		criteria.add(criterion).add(Restrictions.eq("floorNumber", projectAvailability.getFloorNumber()))
+				.add(Restrictions.eq("OfficeNumber", projectAvailability.getOfficeNumber()))
+				.add(Restrictions.eq("areaSquareFoot", projectAvailability.getAreaSquareFoot()))
+				.add(Restrictions.eq("projectMaster", projectAvailability.getProjectMaster()));
 		ProjectAvailability projectAvailabilityDaoResult = (ProjectAvailability) criteria.uniqueResult();
-		
+
 		if (projectAvailabilityDaoResult != null) {
 			projectAvailabilityDto.setAvailabilityId(projectAvailabilityDaoResult.getAvailabilityId());
-		    return true;
+			return true;
 		}
 		return false;
 	}
@@ -127,10 +132,10 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 	@Override
 	public boolean getProjectAvailabilityByAvailabilityId(ProjectAvailabilityDto projectAvailabilityDto) {
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(ProjectAvailability.class).add(Restrictions.eq("availabilityId",projectAvailabilityDto.getAvailabilityId()));
-		ProjectAvailability projectAvailability = (ProjectAvailability)criteria.uniqueResult();
-		if (projectAvailability!=null) {
-			
+		Criteria criteria = session.createCriteria(ProjectAvailability.class)
+				.add(Restrictions.eq("availabilityId", projectAvailabilityDto.getAvailabilityId()));
+		ProjectAvailability projectAvailability = (ProjectAvailability) criteria.uniqueResult();
+		if (projectAvailability != null) {
 			projectAvailabilityDto.setAvailabilityId(projectAvailability.getAvailabilityId());
 			projectAvailabilityDto.setAreaSquareFoot(projectAvailability.getAreaSquareFoot());
 			projectAvailabilityDto.setFloorNumber(projectAvailability.getFloorNumber());
@@ -141,6 +146,40 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 			return true;
 		}
 		return false;
+	}
+
+	@Override
+	public boolean deleteProjectAvailabilityDetailsByParentId(ProjectAvailability projectAvailability) {
+		try {
+			Session session = sessionFactory.openSession();
+			session.createQuery("Delete FROM ProjectAvailability pr WHERE pr.projectMaster.projectId=:projectId")
+					.setInteger("projectId", projectAvailability.getProjectMaster().getProjectId()).executeUpdate();
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+
+	}
+
+	@Override
+	public boolean getProjectAvailabilityListByprojectIdService(ProjectAvailability projectAvailability) {
+		try {
+			Session session = sessionFactory.openSession();
+			Criteria criteria = session.createCriteria(ProjectAvailability.class);
+			Criterion criterion = Restrictions.eq("projectMaster.projectId",
+					projectAvailability.getProjectMaster().getProjectId());
+			criteria.add(criterion);
+			List<ProjectAvailability> projectAvailabilityDaoList = criteria.list();
+			projectAvailability.setProjectAvailabilityList(projectAvailabilityDaoList);
+			if (!projectAvailabilityDaoList.isEmpty())
+				return true;
+			else
+				return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+
 	}
 
 }

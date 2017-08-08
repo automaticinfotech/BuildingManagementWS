@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aits.dto.ProjectAvailabilityDto;
 import com.aits.dto.ProjectMasterDto;
 import com.aits.service.ProjectMasterService;
 
@@ -85,23 +86,6 @@ public class ProjectMasterController {
 		return new ResponseEntity<>(projectMasterDto, HttpStatus.BAD_REQUEST);// 400
 	}
 
-	@RequestMapping(value = "/inactivateProjectMasterDetailsById", method = RequestMethod.POST)
-	public ResponseEntity<?> inactivateProjectMasterDetailsById(@RequestBody ProjectMasterDto projectMasterDto) {
-		System.out.println("Project Id" + projectMasterDto.getProjectId());
-
-		boolean projectStatus = projectMasterService.findProjectMasterDetailsByIdService(projectMasterDto);
-
-		if (projectStatus) {
-			boolean status = projectMasterService.inactivateProjectMasterDetailsByIdService(projectMasterDto);
-			if (status) {
-				projectMasterService.getProjectMasterListService(projectMasterDto);
-				return new ResponseEntity<>(projectMasterDto, HttpStatus.OK);// 200
-			}
-			return new ResponseEntity<>(projectMasterDto, HttpStatus.BAD_REQUEST);
-		}
-		return new ResponseEntity<>(projectMasterDto, HttpStatus.BAD_REQUEST);
-	}
-
 	@RequestMapping(value = "/getActiveProjectMasterList", method = RequestMethod.GET)
 	public ResponseEntity<?> getActiveProjectMasterList() {
 		ProjectMasterDto projectMasterDto = new ProjectMasterDto();
@@ -123,6 +107,28 @@ public class ProjectMasterController {
 		return new ResponseEntity<>(projectMasterDto, HttpStatus.BAD_REQUEST);
 	}
 
-
-
+	@RequestMapping(value="/deleteProjectAvailabilityDetailsByParentId",method=RequestMethod.POST)
+	public ResponseEntity<?> deleteProjectAvailabilityDetailsByParentId(@RequestBody ProjectMasterDto projectMasterDto){
+		   
+		if (projectMasterDto.getProjectId() == 0) {
+			projectMasterService.getProjectMasterListService(projectMasterDto);
+			return new ResponseEntity<>(projectMasterDto, HttpStatus.BAD_REQUEST);// 400
+		} else {
+			projectMasterService.deleteProjectAvailabilityDetailsByParentIdService(projectMasterDto);
+			projectMasterService.getProjectMasterListService(projectMasterDto);
+			return new ResponseEntity<>(projectMasterDto,HttpStatus.OK);
+		}
+	}
+	
+	@RequestMapping(value = "/getProjectAvailabilityListByprojectId", method = RequestMethod.POST)
+	public ResponseEntity<?> getProjectAvailabilityListByprojectId(@RequestBody ProjectMasterDto projectMasterDto) {
+		System.out.println("***************Project Id******************" + projectMasterDto.getProjectId());
+          
+		boolean status=projectMasterService.getProjectAvailabilityListByprojectIdService(projectMasterDto);
+		if(status){
+			//System.out.println("Number of records"+projectMasterDto.getNumberOfAvailabilityRecords());
+			return new ResponseEntity<>(projectMasterDto,HttpStatus.OK);
+		}
+		return new ResponseEntity<>(projectMasterDto, HttpStatus.BAD_REQUEST);
+	}
 }
