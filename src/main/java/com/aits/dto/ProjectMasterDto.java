@@ -12,11 +12,11 @@ public class ProjectMasterDto {
 	private String projectName;
 
 	private String projectIsActive;
-	
+
 	private int numberOfAvailabilityRecords;
 
 	private List<ProjectMaster> projectMasterList;
-	
+
 	private List<ProjectAvailability> projectAvailabilityList;
 
 	public int getProjectId() {
@@ -67,8 +67,4 @@ public class ProjectMasterDto {
 		this.numberOfAvailabilityRecords = numberOfAvailabilityRecords;
 	}
 
-	
-	
-	
-	
 }

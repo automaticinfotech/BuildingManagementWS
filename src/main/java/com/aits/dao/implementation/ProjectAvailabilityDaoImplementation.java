@@ -2,11 +2,14 @@ package com.aits.dao.implementation;
 
 import java.util.List;
 
+
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,7 +32,8 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 	public boolean getProjectAvailabilityDaoList(ProjectAvailability projectAvailability) {
 		try {
 			Session session = sessionFactory.openSession();
-			Criteria criteria = session.createCriteria(ProjectAvailability.class);
+			//Criteria criteria = session.createCriteria(ProjectAvailability.class);
+			Criteria criteria = session.createCriteria(ProjectAvailability.class,"a").createCriteria("a.projectMaster", "p").add(Restrictions.eq("p.projectIsActive", "A")).addOrder(Order.asc("a.availabilityId"));
 			List<ProjectAvailability> projectAvailabilityDaoList = criteria.list();
 			if (!projectAvailabilityDaoList.isEmpty()) {
 				projectAvailability.setProjectAvailabilityList(projectAvailabilityDaoList);
