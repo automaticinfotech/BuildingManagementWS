@@ -37,6 +37,9 @@ public class ProjectAvailability {
 	@Column(name = "isActive", length = 1)
 	private String isActive;
 	
+	@Column(name="description",length=250)
+	private String description;
+	
 	@ManyToOne(targetEntity = ProjectMaster.class, cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH,
 			CascadeType.REMOVE })
 	@JoinColumn(name = "Fk_Project_Id")
@@ -94,7 +97,17 @@ public class ProjectAvailability {
 		this.isActive = isActive;
 	}
 
+
 	
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public ProjectMaster getProjectMaster() {
 		return projectMaster;
 	}
