@@ -33,13 +33,12 @@ public class ProjectAvailabilityServiceImplementation implements ProjectAvailabi
 		projectAvailability.setAreaSquareFoot(projectAvailabilityDto.getAreaSquareFoot());
 		projectAvailability.setFloorNumber(projectAvailabilityDto.getFloorNumber());
 		projectAvailability.setOfficeNumber(projectAvailabilityDto.getOfficeNumber());
-		
 		projectAvailability.setIsActive(projectAvailabilityDto.getIsActive());
 		projectAvailability.setWingName(projectAvailabilityDto.getWingName());
 		projectAvailability.setProjectMaster(projectAvailabilityDto.getProjectMaster());
+		projectAvailability.setDescription(projectAvailabilityDto.getDescription());
 		
 		boolean status=projectAvailabilityDao.insertProjectAvailabilityDetailsDao(projectAvailability);
-		
 		return status;
 	}
 
@@ -54,6 +53,7 @@ public class ProjectAvailabilityServiceImplementation implements ProjectAvailabi
 		projectAvailability.setIsActive(projectAvailabilityDto.getIsActive());
 		projectAvailability.setWingName(projectAvailabilityDto.getWingName());
 		projectAvailability.setProjectMaster(projectAvailabilityDto.getProjectMaster());
+		projectAvailability.setDescription(projectAvailabilityDto.getDescription());
 		
 		boolean status=projectAvailabilityDao.editProjectAvaialabilityById(projectAvailability);
 		return status;
@@ -114,17 +114,6 @@ public class ProjectAvailabilityServiceImplementation implements ProjectAvailabi
 		ProjectAvailability projectAvailability=new ProjectAvailability();
 		projectAvailability.setAvailabilityId(projectAvailabilityDto.getAvailabilityId());
 		boolean status=projectAvailabilityDao.getProjectAvailabilityByAvailabilityId(projectAvailabilityDto);
-		
-		//projectAvailabilityDto.setProjectAvailabilityList(projectAvailability.getProjectAvailabilityList());
-		
-		/*projectAvailabilityDto.setAvailabilityId(projectAvailability.getProjectAvailabilityList().get(0).getAvailabilityId());
-		projectAvailabilityDto.setAreaSquareFoot(projectAvailability.getProjectAvailabilityList().get(0).getAreaSquareFoot());
-		projectAvailabilityDto.setFloorNumber(projectAvailability.getProjectAvailabilityList().get(0).getFloorNumber());
-		projectAvailabilityDto.setOfficeNumber(projectAvailability.getProjectAvailabilityList().get(0).getOfficeNumber());
-		projectAvailabilityDto.setIsActive(projectAvailability.getProjectAvailabilityList().get(0).getIsActive());
-		projectAvailabilityDto.setWingName(projectAvailability.getProjectAvailabilityList().get(0).getWingName());
-		projectAvailabilityDto.setProjectMaster(projectAvailability.getProjectAvailabilityList().get(0).getProjectMaster());*/
-		
 		return status;
 	}
 

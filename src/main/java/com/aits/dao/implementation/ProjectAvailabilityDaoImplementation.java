@@ -74,7 +74,7 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 
 	@Override
 	public boolean findProjectMasterDetailsById(ProjectAvailability projectAvailability) {
-		System.out.println("Inside Dao" + projectAvailability.getAvailabilityId());
+		
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(ProjectAvailability.class);
 		Criterion criterion = Restrictions.eq("availabilityId", projectAvailability.getAvailabilityId());
@@ -95,7 +95,6 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 			transaction.commit();
 			return true;
 		} catch (Exception e) {
-			System.out.println(e);
 			return false;
 		}
 	}
@@ -147,6 +146,7 @@ public class ProjectAvailabilityDaoImplementation implements ProjectAvailability
 			projectAvailabilityDto.setIsActive(projectAvailability.getIsActive());
 			projectAvailabilityDto.setWingName(projectAvailability.getWingName());
 			projectAvailabilityDto.setProjectMaster(projectAvailability.getProjectMaster());
+			projectAvailabilityDto.setDescription(projectAvailability.getDescription());
 			return true;
 		}
 		return false;

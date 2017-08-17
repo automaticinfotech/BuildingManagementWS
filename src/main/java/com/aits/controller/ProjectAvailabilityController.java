@@ -25,11 +25,10 @@ public class ProjectAvailabilityController {
 	@RequestMapping(value="/getProjectAvailabilityList",method=RequestMethod.GET)
 	public ResponseEntity<?> getProjectAvailabilityList() {
 		ProjectAvailabilityDto projectAvailabilityDto = new ProjectAvailabilityDto();
-        System.out.println("Inside ProjectAvailability List");
 		boolean status=projectAvailabilityService.getProjectAvailabilityListService(projectAvailabilityDto);
-        if(status){
-        	return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.OK);
-        }
+        if(status)
+        return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.OK);
+        
         return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.BAD_REQUEST);
 	}
 	
@@ -38,9 +37,9 @@ public class ProjectAvailabilityController {
 	public ResponseEntity<?> getProjectAvailabilityByIdList(@RequestBody ProjectAvailabilityDto projectAvailabilityDto) {
 		
 		boolean status=projectAvailabilityService.getProjectAvailabilityListByIdService(projectAvailabilityDto);
-        if(status){
-        	return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.OK);
-        }
+        if(status)
+        return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.OK);
+        
         return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.BAD_REQUEST);
 	}
 	
@@ -97,9 +96,9 @@ public class ProjectAvailabilityController {
 	public ResponseEntity<?> getProjectAvailabilityByAvailabilityId(@RequestBody ProjectAvailabilityDto projectAvailabilityDto) {
 		
 		boolean status=projectAvailabilityService.getProjectAvailabilityByAvailabilityId(projectAvailabilityDto);
-        if(status){
-        	return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.OK);
-        }
+        if(status)
+        return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.OK);
+        
         return new ResponseEntity<>(projectAvailabilityDto,HttpStatus.BAD_REQUEST);
 	}
 	
